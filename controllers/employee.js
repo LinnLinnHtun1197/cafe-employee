@@ -3,9 +3,7 @@ var employee = require('../models/employee.js');
 exports.allEmployee = function(req, res) {
     employee.getAllEmployee(function(err, info) {
         if (err)
-        {
             res.send(err);
-        }
         res.send(info);
     });
 };

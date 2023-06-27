@@ -27,7 +27,6 @@ employee.getAllEmployee = function getAllEmployee(result) {
             console.log("error: ", err);
             result(null, err);
         } else {
-            console.log('EMPLOYEES : ', res);
             result(null, res);
         }
     });
