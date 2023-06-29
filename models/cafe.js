@@ -40,8 +40,6 @@ cafe.createCafe = function createCafe(cafe, result) {
             let query = `SELECT *
                 FROM CAFES
                 WHERE name = '${cafe.name}' 
-                AND description='${cafe.description}' 
-                AND location='${cafe.location}' 
                 ORDER BY id DESC LIMIT 1`; // to get inserted record
 
             sql.query( query, function (err, response) {

@@ -28,7 +28,7 @@ exports.createEmployee = function(req, res) {
             });
         res.json({
             "status" : "success",
-            "data" : employee,
+            "data" : employee ? employee[0] : "",
             "message" : "Added New Employee Successfully"
         });
     });
@@ -44,7 +44,7 @@ exports.updateEmployee = function(req, res) {
             });
         res.json({
             "status" : "success",
-            "data" : employee,
+            "data" : employee ? employee[0] : "",
             "message" : "Update "+req.body.id+ " successfully"
         });
     });

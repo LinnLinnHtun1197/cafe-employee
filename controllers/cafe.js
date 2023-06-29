@@ -23,7 +23,7 @@ exports.createCafe = function(req, res) {
             });
         res.json({
             "status" : "success",
-            "data" : cafe,
+            "data" : cafe[0],
             "message" : "Added New Cafe Successfully"
         });
     });
@@ -40,7 +40,7 @@ exports.updateCafe = function(req, res) {
             });
         res.json({
             "status" : "success",
-            "data" : cafe,
+            "data" : cafe[0],
             "message" : "Update "+req.body.id+ " successfully"
         });
     });
