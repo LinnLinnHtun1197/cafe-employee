@@ -33,14 +33,24 @@ cafe.getAllCafe = function(location, result) {
 
 // Create
 cafe.createCafe = function createCafe(cafe, result) {
-    console.log(cafe);
     sql.query("INSERT INTO CAFES SET ?", cafe, function (err, res) {
         if(err) {
-            console.log("error: ", err);
             result(err, null);
         } else{
-            console.log(res);
-            result(null, res);
+            let query = `SELECT *
+                FROM CAFES
+                WHERE name = '${cafe.name}' 
+                AND description='${cafe.description}' 
+                AND location='${cafe.location}' 
+                ORDER BY id DESC LIMIT 1`; // to get inserted record
+
+            sql.query( query, function (err, response) {
+                if(err) {
+                    result(err, null);
+                } else {
+                    result(null, response);
+                }
+            });
         }
     });
 };
