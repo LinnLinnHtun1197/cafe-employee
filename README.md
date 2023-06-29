@@ -1,20 +1,16 @@
-##Project Description
+## Project Description
 This project aims to create a database and provide endpoints for managing employee and cafe data. The project supports creating, updating, and deleting employees and cafes, as well as retrieving employee and cafe information. The project is implemented using a MySQL database and utilizes RESTful API endpoints to interact with the database.
 
-
-
-##Prerequisites
+## Prerequisites
 Before running the application, ensure that you have the following software installed:
 Node.js
 MySQL or MongoDB
 
-#Getting Started
-
+# Getting Started
 Clone the project repository from GitHub.
 git clone <repository_url>
 
 Install the project dependencies.
-
 cd <project_directory>
 npm install
 Configure the database connection.
@@ -24,7 +20,7 @@ For MySQL: Run the SQL script database/mysql.sql to create the required tables a
 
 Start the application.
 
-npm start
+npm run start
 The application will start running on the specified port (default is 3000). You can access the endpoints using a REST client or a web browser.
 
 ##Database Design
