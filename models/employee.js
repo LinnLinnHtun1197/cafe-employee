@@ -57,7 +57,7 @@ employee.createEmployee = function createEmployee(cafeId, startDate, employee, r
     sql.query("INSERT INTO EMPLOYEES SET ?", employee, function (err, res) {
         if(err) {
             result(err, null);
-        } else{
+        } else {
             let query = `SELECT *
                 FROM employees
                 WHERE name = '${employee.name}' 
@@ -69,19 +69,23 @@ employee.createEmployee = function createEmployee(cafeId, startDate, employee, r
                 if(err) {
                     result(err, null);
                 } else {
-                    const employeeId = employee[0].id;
-                    const employeeCafeData = {
-                        employee_id: employeeId,
-                        cafe_id: cafeId,
-                        start_date: startDate,
-                    };
-                    sql.query("INSERT INTO EMPLOYEE_CAFE SET ?", employeeCafeData, function (err, res) {
-                        if(err) {
-                            result(err, null);
-                        } else{
-                            result(null, employee);
-                        }
-                    });
+                    if(cafeId) {
+                        const employeeId = employee[0].id;
+                        const employeeCafeData = {
+                            employee_id: employeeId,
+                            cafe_id: cafeId,
+                            start_date: startDate,
+                        };
+                        sql.query("INSERT INTO EMPLOYEE_CAFE SET ?", employeeCafeData, function (err, res) {
+                            if(err) {
+                                result(err, null);
+                            } else{
+                                result(null, employee);
+                            }
+                        });
+                    } else {
+                        result(null, employee);
+                    }
                 }
             });
         }
