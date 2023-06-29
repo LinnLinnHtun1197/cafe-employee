@@ -1,18 +1,21 @@
-var employee = require('../models/employee.js');
+var cafe = require('../models/cafe.js');
 
-exports.allEmployee = function(req, res) {
-    employee.getAllEmployee(req.query.cafe, function(err, emp) {
+exports.allCafe = function(req, res) {
+    cafe.getAllCafe(req.query.location, function(err, emp) {
         if (err)
             res.send(err);
         res.send(emp);
     });
 };
 
-
 // create
-exports.createEmployee = function(req, res) {
-    var newEmployee = new employee(req.body);
-    employee.createEmployee(req.body.cafe_id, req.body.start_date, newEmployee, function(err, employee) {
+exports.createCafe = function(req, res) {
+    var newCafe = new cafe(req.body);
+    //handles null error
+    // if(!newCafe.name || !newCafe.description){
+    //     res.status(400).send({ error:true, message: 'Please provide name and description' });
+    // } else{
+    cafe.createCafe(newCafe, function(err, cafe) {
         if (err)
             res.send({
                 "status" : "failed",
@@ -20,14 +23,15 @@ exports.createEmployee = function(req, res) {
             });
         res.json({
             "status" : "success",
-            "message" : "Added New Employee Successfully"
+            "message" : "Added New Cafe Successfully"
         });
     });
+    // }
 };
 
 //update 
-exports.updateEmployee = function(req, res) {
-    employee.updateEmployee(req.body.id, req.body.cafe_id, new employee(req.body), function(err, emp) {
+exports.updateCafe = function(req, res) {
+    cafe.updateCafe(req.body.id, new cafe(req.body), function(err, cafe) {
         if (err)
             res.send({
                 "status" : "failed",
@@ -41,8 +45,8 @@ exports.updateEmployee = function(req, res) {
 };
 
 // Delete
-exports.deleteEmployee = function(req, res) {
-    employee.deleteEmployee(req.body.id, function(err, employee) {
+exports.deleteCafe = function(req, res) {
+    cafe.deleteCafe(req.body.id, function(err, cafe) {
         if (err)
             res.send({
                 "status" : "failed",

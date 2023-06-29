@@ -6,7 +6,7 @@ const port = process.env.PORT || 8088
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-var routes = require('./routes/employee'); //importing route
+var routes = require('./routes/index'); //importing route
 routes(app); //register the route
 
 // Listen on environment port or 5000
