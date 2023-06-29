@@ -8,6 +8,14 @@ exports.allEmployee = function(req, res) {
     });
 };
 
+// filter with cafe id
+exports.employeeCafe = function(req, res) {
+    employee.getEmployeeCafe(req.query.cafe_id, function(err, emp) {
+        if (err)
+            res.send(err);
+        res.send(emp);
+    });
+};
 
 // create
 exports.createEmployee = function(req, res) {
@@ -20,6 +28,7 @@ exports.createEmployee = function(req, res) {
             });
         res.json({
             "status" : "success",
+            "data" : employee,
             "message" : "Added New Employee Successfully"
         });
     });
@@ -27,7 +36,7 @@ exports.createEmployee = function(req, res) {
 
 //update 
 exports.updateEmployee = function(req, res) {
-    employee.updateEmployee(req.body.id, req.body.cafe_id, new employee(req.body), function(err, emp) {
+    employee.updateEmployee(req.body.id, req.body.cafe_id, new employee(req.body), function(err, employee) {
         if (err)
             res.send({
                 "status" : "failed",
@@ -35,6 +44,7 @@ exports.updateEmployee = function(req, res) {
             });
         res.json({
             "status" : "success",
+            "data" : employee,
             "message" : "Update "+req.body.id+ " successfully"
         });
     });

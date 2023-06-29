@@ -40,6 +40,7 @@ exports.updateCafe = function(req, res) {
             });
         res.json({
             "status" : "success",
+            "data" : cafe,
             "message" : "Update "+req.body.id+ " successfully"
         });
     });

@@ -4,6 +4,7 @@ module.exports = function(app) {
     
     // Employee Routes
     app.route('/employees').get(employee.allEmployee);
+    app.route('/employees/search').get(employee.employeeCafe);
     app.route('/employee').post(employee.createEmployee);
     app.route('/employee').put(employee.updateEmployee);
     app.route('/employee').delete(employee.deleteEmployee);

@@ -64,7 +64,17 @@ cafe.updateCafe = function(id,res, result){
             console.log("error: ", err);
             result(null, err);
         } else{
-            result(null, res);
+            let query = `SELECT *
+                FROM CAFES
+                WHERE id = '${id}'`; // to get inserted record
+
+            sql.query( query, function (err, response) {
+                if(err) {
+                    result(err, null);
+                } else {
+                    result(null, response);
+                }
+            });
         }
     });
 };

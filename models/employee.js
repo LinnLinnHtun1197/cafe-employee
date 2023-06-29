@@ -30,24 +30,46 @@ employee.getAllEmployee = function(cafe, result) {
     });
 };
 
+// filter with cafe id
+employee.getEmployeeCafe = function(cafe, result) {
+    const cafeId = cafe;
+    let query = `SELECT employees.id, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name
+                FROM employees
+                INNER JOIN employee_cafe ON employees.id = employee_cafe.employee_id
+                INNER JOIN cafes ON employee_cafe.cafe_id = cafes.id`;
+
+    if (cafe) {
+        query += ` WHERE cafes.id='${cafeId}'`;
+    }
+
+    query += ` ORDER BY days_worked DESC`;
+    sql.query( query, function (err, res) {
+        if(err) {
+            result(null, err);
+        } else {
+            result(null, res);
+        }
+    });
+};
+
 // Create
 employee.createEmployee = function createEmployee(cafeId, startDate, employee, result) {
     sql.query("INSERT INTO EMPLOYEES SET ?", employee, function (err, res) {
         if(err) {
             result(err, null);
         } else{
-            let query = `SELECT id
+            let query = `SELECT *
                 FROM employees
                 WHERE name = '${employee.name}' 
                 AND email_address='${employee.email_address}' 
                 AND phone_number='${employee.phone_number}' 
                 ORDER BY id DESC LIMIT 1`; // to get inserted id
 
-            sql.query( query, function (err, res) {
+            sql.query( query, function (err, employee) {
                 if(err) {
                     result(err, null);
                 } else {
-                    const employeeId = res[0].id;
+                    const employeeId = employee[0].id;
                     const employeeCafeData = {
                         employee_id: employeeId,
                         cafe_id: cafeId,
@@ -57,7 +79,7 @@ employee.createEmployee = function createEmployee(cafeId, startDate, employee, r
                         if(err) {
                             result(err, null);
                         } else{
-                            result(null, res);
+                            result(null, employee);
                         }
                     });
                 }
@@ -72,24 +94,31 @@ employee.updateEmployee = function(id, cafe_id, res, result){
     sql.query("UPDATE EMPLOYEES SET name = ?, email_address = ?, phone_number = ?, gender = ? WHERE id = ?", 
             [name, email_address, phone_number, gender, id], function (err, res) {
         if(err) {
-            console.log("error: ", err);
             result(null, err);
         } else{
-            if(cafe_id)
-            {
-                sql.query("UPDATE EMPLOYEE_CAFE SET cafe_id = ? WHERE employee_id = ?", 
-                        [cafe_id, id], function (err, res) {
-                    if(err) {
-                        console.log("error: ", err);
-                        result(null, err);
-                    } else{
-                        result(null, res);
+            let query = `SELECT *
+                FROM EMPLOYEES
+                WHERE id = '${id}'`; // to get inserted record
+
+            sql.query( query, function (err, response) {
+                if(err) {
+                    result(err, null);
+                } else {
+                    if(cafe_id)
+                    {
+                        sql.query("UPDATE EMPLOYEE_CAFE SET cafe_id = ? WHERE employee_id = ?", 
+                                [cafe_id, id], function (err, res) {
+                            if(err) {
+                                result(null, err);
+                            } else{
+                                result(null, response);
+                            }
+                        });
+                    } else {
+                        result(null, response);
                     }
-                });
-            } else {
-                result(null, res);
-            }
-            
+                }
+            });
         }
     });
 };
