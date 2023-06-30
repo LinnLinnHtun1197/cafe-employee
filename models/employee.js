@@ -11,7 +11,7 @@ var employee = function(emp){
 
 employee.getAllEmployee = function(cafe, result) {
     const reqValue = cafe;
-    let query = `SELECT employees.id, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name
+    let query = `SELECT employees.id, employees.gender, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name, cafes.id AS cafe_id
                 FROM employees
                 INNER JOIN employee_cafe ON employees.id = employee_cafe.employee_id
                 INNER JOIN cafes ON employee_cafe.cafe_id = cafes.id`;
@@ -58,10 +58,13 @@ employee.createEmployee = function createEmployee(cafeId, startDate, employee, r
         if(err) {
             result(err, null);
         } else {
-            let query = `SELECT *
-                FROM employees
-                WHERE name = '${employee.name}' 
-                ORDER BY id DESC LIMIT 1`; // to get inserted id
+
+            let query = `SELECT employees.id AS id, employees.gender, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name, cafes.id AS cafe_id
+                        FROM employees
+                        LEFT JOIN employee_cafe ON employees.id = employee_cafe.employee_id
+                        LEFT JOIN cafes ON employee_cafe.cafe_id = cafes.id
+                        WHERE employees.name = '${employee.name}'
+                        ORDER BY id DESC LIMIT 1`;
 
             sql.query( query, function (err, employee) {
                 if(err) {
@@ -78,7 +81,20 @@ employee.createEmployee = function createEmployee(cafeId, startDate, employee, r
                             if(err) {
                                 result(err, null);
                             } else{
-                                result(null, employee);
+                                let emp = `SELECT employees.id AS id, employees.gender, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name, cafes.id AS cafe_id
+                                            FROM employees
+                                            LEFT JOIN employee_cafe ON employees.id = employee_cafe.employee_id
+                                            LEFT JOIN cafes ON employee_cafe.cafe_id = cafes.id
+                                            WHERE employees.name = '${employee[0].name}'
+                                            ORDER BY id DESC LIMIT 1`; // to get inserted id
+
+                                sql.query(emp, function (err, res) {
+                                    if(err) {
+                                        result(err, null);
+                                    } else{
+                                        result(null, res);
+                                    }
+                                });
                             }
                         });
                     } else {
@@ -98,9 +114,11 @@ employee.updateEmployee = function(id, cafe_id, res, result){
         if(err) {
             result(null, err);
         } else{
-            let query = `SELECT *
-                FROM EMPLOYEES
-                WHERE id = '${id}'`; // to get inserted record
+            let query = `SELECT employees.id, employees.gender, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name, cafes.id AS cafe_id
+                        FROM employees
+                        LEFT JOIN employee_cafe ON employees.id = employee_cafe.employee_id
+                        LEFT JOIN cafes ON employee_cafe.cafe_id = cafes.id
+                        WHERE employees.id = '${id}'`;
 
             sql.query( query, function (err, response) {
                 if(err) {
@@ -113,7 +131,19 @@ employee.updateEmployee = function(id, cafe_id, res, result){
                             if(err) {
                                 result(null, err);
                             } else{
-                                result(null, response);
+                                let query = `SELECT employees.id, employees.gender, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name, cafes.id AS cafe_id
+                                            FROM employees
+                                            LEFT JOIN employee_cafe ON employees.id = employee_cafe.employee_id
+                                            LEFT JOIN cafes ON employee_cafe.cafe_id = cafes.id
+                                            WHERE employees.id = '${id}'`;
+
+                                sql.query(query, function (err, res) {
+                                    if(err) {
+                                        result(null, err);
+                                    } else{
+                                        result(null, res);
+                                    }
+                                });
                             }
                         });
                     } else {
