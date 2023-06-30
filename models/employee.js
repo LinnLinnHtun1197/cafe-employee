@@ -161,7 +161,13 @@ employee.deleteEmployee = function(id, result){
         if(err) {
             result(null, err);
         } else {
-            result(null, res);
+            sql.query(`DELETE FROM employee_cafe WHERE employee_id = '${paramId}'`, function (err, res) {
+                if(err) {
+                    result(null, err);
+                } else {
+                    result(null, res);
+                }
+            });
         }
     });
 };

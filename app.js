@@ -9,5 +9,5 @@ app.use(bodyParser.json())
 var routes = require('./routes/index'); //importing route
 routes(app); //register the route
 
-// Listen on environment port or 5000
+// Listen on environment port or 8080
 app.listen(port,()=>console.log(`Listen on port ${port}`))
