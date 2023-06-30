@@ -59,7 +59,7 @@ exports.updateEmployee = function(req, res) {
 
 // Delete
 exports.deleteEmployee = function(req, res) {
-    employee.deleteEmployee(req.body.id, function(err, employee) {
+    employee.deleteEmployee(req.params.id, function(err, employee) {
         if (err)
             res.send({
                 "status" : "error",

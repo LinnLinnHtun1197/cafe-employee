@@ -48,7 +48,7 @@ exports.updateCafe = function(req, res) {
 
 // Delete
 exports.deleteCafe = function(req, res) {
-    cafe.deleteCafe(req.body.id, function(err, cafe) {
+    cafe.deleteCafe(req.params.id, function(err, cafe) {
         if (err)
             res.send({
                 "status" : "error",

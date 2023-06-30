@@ -7,11 +7,11 @@ module.exports = function(app) {
     app.route('/employees/search').get(employee.employeeCafe);
     app.route('/employee').post(employee.createEmployee);
     app.route('/employee').put(employee.updateEmployee);
-    app.route('/employee').delete(employee.deleteEmployee);
+    app.route('/employee/:id/delete').delete(employee.deleteEmployee);
     
     // Cafe Routes
     app.route('/cafes').get(cafe.allCafe);
     app.route('/cafe').post(cafe.createCafe);
     app.route('/cafe').put(cafe.updateCafe);
-    app.route('/cafe').delete(cafe.deleteCafe);
+    app.route('/cafe/:id/delete').delete(cafe.deleteCafe);
 };
