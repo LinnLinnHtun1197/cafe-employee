@@ -61,8 +61,6 @@ employee.createEmployee = function createEmployee(cafeId, startDate, employee, r
             let query = `SELECT *
                 FROM employees
                 WHERE name = '${employee.name}' 
-                AND email_address='${employee.email_address}' 
-                AND phone_number='${employee.phone_number}' 
                 ORDER BY id DESC LIMIT 1`; // to get inserted id
 
             sql.query( query, function (err, employee) {
