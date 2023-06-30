@@ -61,10 +61,12 @@ cafe.updateCafe = function(id,res, result){
         if(err) {
             console.log("error: ", err);
             result(null, err);
-        } else{
-            let query = `SELECT *
-                FROM CAFES
-                WHERE id = '${id}'`; // to get inserted record
+        } else {
+            let query = `SELECT cafes.id, cafes.name, cafes.description, cafes.logo, cafes.location, COUNT(employee_cafe.employee_id) AS employees
+                        FROM cafes 
+                        LEFT JOIN employee_cafe ON cafes.id = employee_cafe.cafe_id 
+                        LEFT JOIN employees ON employees.id = employee_cafe.employee_id 
+                        WHERE cafes.id = '${id}'`; // to get updated record
 
             sql.query( query, function (err, response) {
                 if(err) {
