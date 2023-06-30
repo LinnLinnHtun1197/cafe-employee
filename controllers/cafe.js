@@ -18,7 +18,7 @@ exports.createCafe = function(req, res) {
     cafe.createCafe(newCafe, function(err, cafe) {
         if (err)
             res.send({
-                "status" : "failed",
+                "status" : "error",
                 "message": err
             });
         res.json({
@@ -35,7 +35,7 @@ exports.updateCafe = function(req, res) {
     cafe.updateCafe(req.body.id, new cafe(req.body), function(err, cafe) {
         if (err)
             res.send({
-                "status" : "failed",
+                "status" : "error",
                 "message": err
             });
         res.json({
@@ -51,7 +51,7 @@ exports.deleteCafe = function(req, res) {
     cafe.deleteCafe(req.body.id, function(err, cafe) {
         if (err)
             res.send({
-                "status" : "failed",
+                "status" : "error",
                 "message": err
             });
         res.json({

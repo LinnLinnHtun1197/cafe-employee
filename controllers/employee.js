@@ -30,7 +30,7 @@ exports.createEmployee = function(req, res) {
     employee.createEmployee(req.body.cafe_id, date, newEmployee, function(err, employee) {
         if (err)
             res.send({
-                "status" : "failed",
+                "status" : "error",
                 "message": err
             });
         res.json({
@@ -46,7 +46,7 @@ exports.updateEmployee = function(req, res) {
     employee.updateEmployee(req.body.id, req.body.cafe_id, new employee(req.body), function(err, employee) {
         if (err)
             res.send({
-                "status" : "failed",
+                "status" : "error",
                 "message": err
             });
         res.json({
@@ -62,7 +62,7 @@ exports.deleteEmployee = function(req, res) {
     employee.deleteEmployee(req.body.id, function(err, employee) {
         if (err)
             res.send({
-                "status" : "failed",
+                "status" : "error",
                 "message": err
             });
         res.json({
