@@ -13,8 +13,8 @@ employee.getAllEmployee = function(cafe, result) {
     const reqValue = cafe;
     let query = `SELECT employees.id, employees.gender, employees.name, employees.email_address, employees.phone_number, DATEDIFF(NOW(), employee_cafe.start_date) AS days_worked, cafes.name AS cafe_name, cafes.id AS cafe_id
                 FROM employees
-                INNER JOIN employee_cafe ON employees.id = employee_cafe.employee_id
-                INNER JOIN cafes ON employee_cafe.cafe_id = cafes.id`;
+                LEFT JOIN employee_cafe ON employees.id = employee_cafe.employee_id
+                LEFT JOIN cafes ON employee_cafe.cafe_id = cafes.id`;
 
     if (cafe) {
         query += ` WHERE cafes.name LIKE '%${reqValue}%' OR cafes.location LIKE '%${reqValue}%'`;
