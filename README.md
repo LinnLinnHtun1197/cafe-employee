@@ -21,4 +21,4 @@ For MySQL: Run the SQL script database/mysql.sql to create the required tables a
 
 # Start the application.
 npm run start
-The application will start running on the specified port (default is 3000). You can access the endpoints using a REST client or a web browser.
+The application will start running on the specified port (default is 8088). You can access the endpoints using a REST client or a web browser.
