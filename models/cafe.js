@@ -81,24 +81,17 @@ cafe.updateCafe = function(id,res, result){
 
 cafe.deleteCafe = function(id, result){
     var paramId = id;
-    sql.query(`DELETE FROM employees WHERE id IN (SELECT employee_id FROM employee_cafe WHERE cafe_id = '${paramId}')`, function (err, res) {
+    sql.query(`DELETE FROM employee_cafe WHERE cafe_id = '${paramId}'`, function (err, res) {
         if(err) {
             result(null, err);
         } else {
-            sql.query(`DELETE FROM employee_cafe WHERE cafe_id = '${paramId}'`, function (err, res) {
+            sql.query(`DELETE FROM cafes WHERE id = '${paramId}'`, function (err, res) {
                 if(err) {
                     result(null, err);
                 } else {
-                    sql.query(`DELETE FROM cafes WHERE id = '${paramId}'`, function (err, res) {
-                        if(err) {
-                            result(null, err);
-                        } else {
-                            result(null, res);
-                        }
-                    });
+                    result(null, res);
                 }
             });
-            
         }
     });
 };
